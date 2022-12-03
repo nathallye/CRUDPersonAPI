@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUDPersonAPI", "CRUDPersonAPI\CRUDPersonAPI.csproj", "{8BB47730-64DB-4EF5-B486-D7CD4E01699A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BB47730-64DB-4EF5-B486-D7CD4E01699A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BB47730-64DB-4EF5-B486-D7CD4E01699A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BB47730-64DB-4EF5-B486-D7CD4E01699A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BB47730-64DB-4EF5-B486-D7CD4E01699A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4232FAC4-6B3B-48FF-A2B8-A7E9C2B5EC9C}
+	EndGlobalSection
+EndGlobal
