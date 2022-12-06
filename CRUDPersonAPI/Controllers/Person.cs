@@ -8,11 +8,11 @@ namespace CRUDPersonAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CRUDPerson : ControllerBase
+    public class Person : ControllerBase
     {
-        // GET localhost:7153/api/CRUDPerson/Person
+        // GET localhost:7153/api/Person/GetAll
         [HttpGet]
-        [Route("Person")]
+        [Route("GetAll")]
         public IActionResult Get()
         {
             try
@@ -25,15 +25,15 @@ namespace CRUDPersonAPI.Controllers
             }
         }
 
-        // GET localhost:7153/api/CRUDPerson/Person?id={}
+        // GET localhost:7153/api/Person/GetOne?id={}
         [HttpGet]
-        [Route("Person/{id}")]
+        [Route("GetOne/{id}")]
         public IActionResult Get(int id)
         {
             try
             {
                 PersonRepository personRepository = new PersonRepository();
-                Person person = personRepository.GetOne(id);
+                Models.Person person = personRepository.GetOne(id);
                 return Ok(person);
             }
             catch (KeyNotFoundException)
@@ -42,10 +42,10 @@ namespace CRUDPersonAPI.Controllers
             }
         }
 
-        // POST localhost:7153/api/CRUDPerson/Person
+        // POST localhost:7153/api/Person/Post
         [HttpPost]
-        [Route("Person")]
-        public IActionResult Post([FromBody] Person person)
+        [Route("Post")]
+        public IActionResult Post([FromBody] Models.Person person)
         {
             try
             {
@@ -65,9 +65,9 @@ namespace CRUDPersonAPI.Controllers
             }
         }
 
-        // DELETE localhost:7153/api/CRUDPerson/Person?id={}
+        // DELETE localhost:7153/api/Person/Delete?id={}
         [HttpDelete]
-        [Route("Person/{id}")]
+        [Route("Delete/{id}")]
         public IActionResult Delete(int id)
         {
             try
@@ -82,10 +82,10 @@ namespace CRUDPersonAPI.Controllers
             }
         }
 
-        // PUT localhost:7153/api/CRUDPerson/Person?id={}
+        // PUT localhost:7153/api/Person/Put?id={}
         [HttpPut]
-        [Route("Person/{id}")]
-        public IActionResult Put([FromBody] Person person)
+        [Route("Put/{id}")]
+        public IActionResult Put([FromBody] Models.Person person)
         {
             try
             {
