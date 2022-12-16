@@ -1,167 +1,82 @@
-﻿using System.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
+
+using CRUDPersonAPI.Dto;
+using CRUDPersonAPI.Interface;
 using CRUDPersonAPI.Models;
+using CRUDPersonAPI.Repository.Context;
 
 namespace CRUDPersonAPI.Repository
 {
-    public class PersonRepository
+    public class PersonRepository : IPersonRepository
     {
-        public IList<Person> GetAll()
+        // Propriedade que terá a instância do DataBaseContext
+        private readonly DatabaseContext _context;
+
+        public PersonRepository(DatabaseContext context)
         {
-            IList<Person> list = new List<Person>();
-
-            var connectionString = new ConfigurationBuilder()
-                                        .SetBasePath(Directory.GetCurrentDirectory())
-                                        .AddJsonFile("appsettings.json")
-                                        .Build().GetConnectionString("CRUDPersonAPIConnection");
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                String query =
-                    "SELECT ID, NAME, ADDRESS FROM PERSON ";
-
-                SqlCommand command = new SqlCommand(query, connection);
-                connection.Open();
-                SqlDataReader dataReader = command.ExecuteReader();
-
-                while (dataReader.Read())
-                {
-                    // Recupera os dados
-                    Person person = new Person();
-                    person.Id = Convert.ToInt32(dataReader["ID"]);
-                    person.Name = dataReader["NAME"].ToString();
-                    person.Address = dataReader["ADDRESS"].ToString();
-
-                    // Adiciona o modelo da lista
-                    list.Add(person);
-                }
-
-                connection.Close();
-
-            } // Finaliza o objeto connection
-
-            // Retorna a lista
-            return list;
+            // Criando um instância da classe de contexto do EntityFramework
+            _context = context;
         }
 
-        public Person GetOne(int id)
+
+        public List<PersonDto> GetAll()
         {
-
-            Person person = new Person();
-
-            var connectionString = new ConfigurationBuilder()
-                                        .SetBasePath(Directory.GetCurrentDirectory())
-                                        .AddJsonFile("appsettings.json")
-                                        .Build().GetConnectionString("CRUDPersonAPIConnection");
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            return _context.Person.Select(s => new PersonDto()
             {
-                String query =
-                    "SELECT ID, NAME, ADDRESS FROM PERSON WHERE ID = @id ";
-
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.Add("@id", SqlDbType.Int);
-                command.Parameters["@id"].Value = id;
-                connection.Open();
-
-                SqlDataReader dataReader = command.ExecuteReader();
-
-                while (dataReader.Read())
-                {
-                    // Recupera os dados
-                    person.Id = Convert.ToInt32(dataReader["ID"]);
-                    person.Name = dataReader["NAME"].ToString();
-                    person.Address = dataReader["ADDRESS"].ToString();
-                }
-
-                connection.Close();
-
-            } // Finaliza o objeto connection
-
-            // Retorna a lista
-            return person;
+                PersonId = s.PersonId,
+                Name = s.Name,
+                Address = s.Address
+            }).ToList();
         }
 
-        public void Create(Person person)
+        
+        public PersonDto GetOne(int id)
         {
-            var connectionString = new ConfigurationBuilder()
-                                        .SetBasePath(Directory.GetCurrentDirectory())
-                                        .AddJsonFile("appsettings.json")
-                                        .Build().GetConnectionString("CRUDPersonAPIConnection");
+            return (from t in _context.Person
+                    where t.PersonId == id
+                    select new PersonDto()
+                    {
+                        PersonId = t.PersonId,
+                        Name = t.Name,
+                        Address = t.Address
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                String query =
-                    "INSERT INTO PERSON ( NAME, ADDRESS ) VALUES ( @name, @address ) ";
-
-                SqlCommand command = new SqlCommand(query, connection);
-
-                // Adicionando o valor ao comando
-                command.Parameters.Add("@name", SqlDbType.Text);
-                command.Parameters["@name"].Value = person.Name;
-                command.Parameters.Add("@address", SqlDbType.Text);
-                command.Parameters["@address"].Value = person.Address;
-
-                // Abrindo a conexão com  o Banco
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
+                    })
+                    ?.FirstOrDefault()
+                    ?? new PersonDto();
         }
 
+        
+        public int Create(PersonCreateDto person)
+        {
+            Person personEntity = new Person()
+            {
+                Name = person.Name,
+                Address = person.Address
+            };
+
+            _context.ChangeTracker.Clear();
+            _context.Person.Add(personEntity);
+            return _context.SaveChanges();
+        }
+
+        /*
         public void Update(Person person)
         {
-            var connectionString = new ConfigurationBuilder()
-                                        .SetBasePath(Directory.GetCurrentDirectory())
-                                        .AddJsonFile("appsettings.json")
-                                        .Build().GetConnectionString("CRUDPersonAPIConnection");
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                String query =
-                    "UPDATE PERSON SET NAME = @name , ADDRESS = @address WHERE ID = @id  ";
-
-                SqlCommand command = new SqlCommand(query, connection);
-
-                // Adicionando o valor ao comando
-                command.Parameters.Add("@name", SqlDbType.Text);
-                command.Parameters.Add("@address", SqlDbType.Text);
-                command.Parameters.Add("@id", SqlDbType.Int);
-                command.Parameters["@name"].Value = person.Name;
-                command.Parameters["@address"].Value = person.Address;
-                command.Parameters["@id"].Value = person.Id;
-
-                // Abrindo a conexão com  o Banco
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
+            _context.Person.Update(person);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var connectionString = new ConfigurationBuilder()
-                                        .SetBasePath(Directory.GetCurrentDirectory())
-                                        .AddJsonFile("appsettings.json")
-                                        .Build().GetConnectionString("CRUDPersonAPIConnection");
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            // Criar um tipo produto apenas com o PersonId
+            var person = new Person()
             {
-                String query =
-                    "DELETE PERSON WHERE ID = @id  ";
+                PersonId = id
+            };
 
-                SqlCommand command = new SqlCommand(query, connection);
-
-                // Adicionando o valor ao comando
-                command.Parameters.Add("@id", SqlDbType.Int);
-                command.Parameters["@id"].Value = id;
-
-                // Abrindo a conexão com  o Banco
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-
+            _context.Person.Remove(person);
+            _context.SaveChanges();
         }
+        */
     }
 }
