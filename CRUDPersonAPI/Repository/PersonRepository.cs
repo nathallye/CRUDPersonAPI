@@ -23,7 +23,7 @@ namespace CRUDPersonAPI.Repository
         {
             return _context.Person.Select(s => new PersonDto()
             {
-                PersonId = s.PersonId,
+                Id = s.Id,
                 Name = s.Name,
                 Address = s.Address
             }).ToList();
@@ -33,10 +33,10 @@ namespace CRUDPersonAPI.Repository
         public PersonDto GetOne(int id)
         {
             return (from t in _context.Person
-                    where t.PersonId == id
+                    where t.Id == id
                     select new PersonDto()
                     {
-                        PersonId = t.PersonId,
+                        Id = t.Id,
                         Name = t.Name,
                         Address = t.Address
 

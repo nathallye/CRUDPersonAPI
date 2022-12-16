@@ -7,6 +7,23 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<CRUDPersonAPI.Repository.Context.DatabaseContext>();
+
+builder.Services.AddScoped<CRUDPersonAPI.Interface.IPersonRepository, CRUDPersonAPI.Repository.PersonRepository>();
+
+// CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyRuleCors",
+        policy =>
+        {
+            policy.AllowAnyHeader()
+            .AllowAnyOrigin()
+            .AllowAnyMethod();
+
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,6 +32,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("MyRuleCors");
 
 app.UseHttpsRedirection();
 

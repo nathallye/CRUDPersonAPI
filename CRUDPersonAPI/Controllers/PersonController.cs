@@ -11,13 +11,13 @@ namespace CRUDPersonAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PeopleController : ControllerBase
+    public class PersonController : ControllerBase
     {
         private readonly IPersonRepository _personRepository;
 
         public object TempData { get; private set; }
 
-        public PeopleController(IPersonRepository personRepository)
+        public PersonController(IPersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
