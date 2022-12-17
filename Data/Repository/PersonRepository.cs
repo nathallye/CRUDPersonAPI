@@ -25,7 +25,11 @@ namespace Data.Repository
             {
                 Id = s.Id,
                 Name = s.Name,
+                LastName = s.LastName,
+                CPF = s.CPF,
+                Email = s.Email,
                 Address = s.Address
+
             }).ToList();
         }
 
@@ -38,6 +42,9 @@ namespace Data.Repository
                     {
                         Id = t.Id,
                         Name = t.Name,
+                        LastName = t.LastName,
+                        CPF = t.CPF,
+                        Email = t.Email,
                         Address = t.Address
 
                     })
@@ -51,6 +58,9 @@ namespace Data.Repository
             Person personEntity = new Person()
             {
                 Name = person.Name,
+                LastName = person.LastName,
+                CPF = person.CPF,
+                Email = person.Email,
                 Address = person.Address
             };
 
@@ -78,6 +88,9 @@ namespace Data.Repository
             Person personEntity = new Person()
             {
                 Name = person.Name,
+                LastName = person.LastName,
+                CPF = person.CPF,
+                Email = person.Email,
                 Address = person.Address
             };
 

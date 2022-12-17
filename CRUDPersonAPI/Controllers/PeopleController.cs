@@ -17,7 +17,7 @@ namespace CRUDPersonAPI.Controllers
             _personRepository = personRepository;
         }
 
-        // GET localhost:7153/api/Person/GetAll
+        // GET localhost:7153/api/People/GetAll
         [HttpGet]
         [Route("GetAll")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Data.Models.Person>))]
@@ -45,7 +45,7 @@ namespace CRUDPersonAPI.Controllers
             }
         }
 
-        // GET localhost:7153/api/Person/GetOne?id={}
+        // GET localhost:7153/api/People/GetOne?id={}
         [HttpGet]
         [Route("GetOne/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Data.Models.Person))]
@@ -68,9 +68,9 @@ namespace CRUDPersonAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-        } 
-        
-        // POST localhost:7153/api/Person/Post
+        }
+
+        // POST localhost:7153/api/People/Post
         [HttpPost]
         [Route("Create")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Data.Models.Person))]
@@ -93,8 +93,8 @@ namespace CRUDPersonAPI.Controllers
             }
         }
 
-        // PUT localhost:7153/api/Person/Update?id={}
-        [HttpPatch]
+        // Patch localhost:7153/api/People/Update?id={}
+        [HttpPut]
         [Route("Update/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Data.Models.Person))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -116,7 +116,7 @@ namespace CRUDPersonAPI.Controllers
             }
         }
 
-        // DELETE localhost:7153/api/Person/Delete?id={}
+        // DELETE localhost:7153/api/People/Delete?id={}
         [HttpDelete]
         [Route("Delete/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(int))]
