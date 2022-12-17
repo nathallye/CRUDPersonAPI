@@ -46,7 +46,7 @@ namespace CRUDPersonAPI.Repository
         }
 
         
-        public int Create(PersonCreateDto person)
+        public Person Create(PersonCreateDto person)
         {
             Person personEntity = new Person()
             {
@@ -56,27 +56,46 @@ namespace CRUDPersonAPI.Repository
 
             _context.ChangeTracker.Clear();
             _context.Person.Add(personEntity);
-            return _context.SaveChanges();
-        }
-
-        /*
-        public void Update(Person person)
-        {
-            _context.Person.Update(person);
             _context.SaveChanges();
+            //  return _context.SaveChanges();
+            return personEntity;
         }
 
-        public void Delete(int id)
+        public Person Update(PersonUpdateDto person)
         {
-            // Criar um tipo produto apenas com o PersonId
+            Person personEntityDB =
+                (from c in _context.Person
+                 where c.Id == person.Id
+                 select c)
+                 ?.FirstOrDefault()
+                 ?? new Person();
+
+            if (personEntityDB == null || DBNull.Value.Equals(personEntityDB.Id) || personEntityDB.Id == 0)
+            {
+                return null;
+            }
+
+            Person personEntity = new Person()
+            {
+                Name = person.Name,
+                Address = person.Address
+            };
+
+            _context.ChangeTracker.Clear();
+            _context.Person.Add(personEntity);
+            _context.SaveChanges();
+            return personEntity;
+        }
+
+        public int Delete(int id)
+        {
             var person = new Person()
             {
-                PersonId = id
+                Id = id
             };
 
             _context.Person.Remove(person);
-            _context.SaveChanges();
+            return _context.SaveChanges();
         }
-        */
     }
 }

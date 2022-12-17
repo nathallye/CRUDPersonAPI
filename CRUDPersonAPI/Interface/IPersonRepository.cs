@@ -1,4 +1,5 @@
 ﻿using CRUDPersonAPI.Dto;
+using CRUDPersonAPI.Models;
 
 namespace CRUDPersonAPI.Interface
 {
@@ -8,6 +9,10 @@ namespace CRUDPersonAPI.Interface
         
         PersonDto GetOne(int id);
 
-        int Create(PersonCreateDto person);
+        Person Create(PersonCreateDto person);
+
+        Person Update(PersonUpdateDto person);
+        
+        int Delete(int Id);
     }
 }
