@@ -7,9 +7,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<CRUDPersonAPI.Repository.Context.DatabaseContext>();
+builder.Services.AddDbContext<Data.Repository.Context.DatabaseContext>();
 
-builder.Services.AddScoped<CRUDPersonAPI.Interface.IPersonRepository, CRUDPersonAPI.Repository.PersonRepository>();
+builder.Services.AddScoped<Data.Interface.IPersonRepository, Data.Repository.PersonRepository>();
 
 // CORS
 builder.Services.AddCors(options =>

@@ -1,4 +1,4 @@
-﻿namespace CRUDPersonAPI.Dto
+﻿namespace Data.Dto
 {
     public class PersonUpdateDto
     {

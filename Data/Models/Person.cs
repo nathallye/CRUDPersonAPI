@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-
-namespace CRUDPersonAPI.Models
+﻿namespace Data.Models
 {
     public class Person
     {

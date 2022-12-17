@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
-using CRUDPersonAPI.Models;
+using Data.Models;
 
-namespace CRUDPersonAPI.Repository.Context
+namespace Data.Repository.Context
 {
     public class DatabaseContext : DbContext
     {
@@ -28,7 +28,7 @@ namespace CRUDPersonAPI.Repository.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<Person>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__A5D4E15B89531ACF");
@@ -40,6 +40,6 @@ namespace CRUDPersonAPI.Repository.Context
             });
         }
 
-        //partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        // partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

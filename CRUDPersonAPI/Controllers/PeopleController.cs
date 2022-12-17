@@ -1,23 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-using CRUDPersonAPI.Repository;
-using CRUDPersonAPI.Interface;
-using CRUDPersonAPI.Models;
-using CRUDPersonAPI.Dto;
 using System;
 
 namespace CRUDPersonAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonController : ControllerBase
+    public class PeopleController : ControllerBase
     {
-        private readonly IPersonRepository _personRepository;
+        private readonly Data.Interface.IPersonRepository _personRepository;
 
         public object TempData { get; private set; }
 
-        public PersonController(IPersonRepository personRepository)
+        public PeopleController(Data.Interface.IPersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
@@ -25,13 +20,13 @@ namespace CRUDPersonAPI.Controllers
         // GET localhost:7153/api/Person/GetAll
         [HttpGet]
         [Route("GetAll")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Person>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<Data.Models.Person>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAll()
         {
             try
             {
-                List<PersonDto> list = _personRepository.GetAll();
+                List<Data.Dto.PersonDto> list = _personRepository.GetAll();
                 if (list == null)
                 {
                     return NoContent();
@@ -53,7 +48,7 @@ namespace CRUDPersonAPI.Controllers
         // GET localhost:7153/api/Person/GetOne?id={}
         [HttpGet]
         [Route("GetOne/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Person))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Data.Models.Person))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetOne(int id)
         {
@@ -62,7 +57,7 @@ namespace CRUDPersonAPI.Controllers
 
             try
             {
-                PersonDto person = _personRepository.GetOne(id);
+                Data.Dto.PersonDto person = _personRepository.GetOne(id);
 
                 if (person == null)
                     return NoContent();
@@ -78,15 +73,15 @@ namespace CRUDPersonAPI.Controllers
         // POST localhost:7153/api/Person/Post
         [HttpPost]
         [Route("Create")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Person))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Data.Models.Person))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Create(PersonCreateDto newPerson)
+        public IActionResult Create(Data.Dto.PersonCreateDto newPerson)
         {
             try
             {
                 // int returnLines = _personRepository.Create(newPerson);
 
-                Person personEntity = _personRepository.Create(newPerson);
+                Data.Models.Person personEntity = _personRepository.Create(newPerson);
 
                 return Ok(personEntity);
 
@@ -101,15 +96,15 @@ namespace CRUDPersonAPI.Controllers
         // PUT localhost:7153/api/Person/Update?id={}
         [HttpPatch]
         [Route("Update/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Person))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Data.Models.Person))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult Update(PersonUpdateDto person)
+        public IActionResult Update(Data.Dto.PersonUpdateDto person)
         {
             try
             {
                 // int returnLines = _personRepository.Create(newPerson);
 
-                Person personEntity = _personRepository.Update(person);
+                Data.Models.Person personEntity = _personRepository.Update(person);
 
                 return Ok(personEntity);
 

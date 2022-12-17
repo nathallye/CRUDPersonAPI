@@ -1,11 +1,11 @@
 ﻿using System.Data;
 
-using CRUDPersonAPI.Dto;
-using CRUDPersonAPI.Interface;
-using CRUDPersonAPI.Models;
-using CRUDPersonAPI.Repository.Context;
+using Data.Dto;
+using Data.Interface;
+using Data.Models;
+using Data.Repository.Context;
 
-namespace CRUDPersonAPI.Repository
+namespace Data.Repository
 {
     public class PersonRepository : IPersonRepository
     {
@@ -29,7 +29,7 @@ namespace CRUDPersonAPI.Repository
             }).ToList();
         }
 
-        
+
         public PersonDto GetOne(int id)
         {
             return (from t in _context.Person
@@ -45,7 +45,7 @@ namespace CRUDPersonAPI.Repository
                     ?? new PersonDto();
         }
 
-        
+
         public Person Create(PersonCreateDto person)
         {
             Person personEntity = new Person()
