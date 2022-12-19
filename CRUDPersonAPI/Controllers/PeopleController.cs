@@ -10,8 +10,6 @@ namespace CRUDPersonAPI.Controllers
     {
         private readonly Data.Interface.IPersonRepository _personRepository;
 
-        public object TempData { get; private set; }
-
         public PeopleController(Data.Interface.IPersonRepository personRepository)
         {
             _personRepository = personRepository;
